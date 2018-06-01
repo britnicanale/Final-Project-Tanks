@@ -1,17 +1,20 @@
 class Tank{
   float xcoor, ycoor;
   boolean isHit;
+  PImage tank = loadImage("tank.png");
   
   Tank(float xcoor, float ycoor){
     this.xcoor = xcoor;
     this.ycoor = ycoor;
     isHit = false;
-    PImage tank = loadImage("tank.png");
     image(tank, xcoor, ycoor, 60, 30);
   }
   
   Projectile shoot(float velocity, float angle){
     return new Projectile(xcoor + 60, ycoor, velocity, angle);
+  }
+  void redraw(){
+     image(tank, xcoor, ycoor, 60, 30);
   }
   void explode(){
     if(isHit){

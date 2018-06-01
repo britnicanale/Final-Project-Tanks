@@ -9,15 +9,31 @@ void setup(){
   background(135,206,250);
   walls = new Wall[2];
   walls[0] = new Wall(0, height * 2 / 3, width);
-  walls[1] = new Wall(225, 50, 275);
+  walls[1] = new Wall(225, 150, 275);
   tanks = new Tank[1];
   tanks[0] = new Tank( walls[1].rightX + 200, walls[0].leftY - 30);
   myTank = new Tank(walls[1].leftX / 2 - 60, walls[0].leftY - 30);
+
 }
+
+void rescreen(){
+   background(135,206,250);
+   for(int i = 0; i < walls.length;i++){
+     walls[i].redraw();
+   }
+   for(int i = 0; i < tanks.length;i++){
+     tanks[i].redraw();
+   }
+   myTank.redraw();
+}
+   
 void draw(){
-if(p!= null && p.exists){
-  p.move();
-}
+  if(p!= null && p.exists){
+    rescreen();
+    p.move();
+  }else if(p != null && !p.exists && p.exploding){
+      p.explode();
+  }  
 }
 
 float startX, startY, endX, endY;
@@ -30,9 +46,10 @@ void mousePressed(){
 
 
 void mouseDragged(){
- //endX = mouseX;
- //endY = mouseY;
- //draw();
+ endX = mouseX;
+ endY = mouseY;
+ rescreen();
+ makeline();
 }
 
 void mouseReleased(){

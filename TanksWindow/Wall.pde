@@ -9,4 +9,8 @@ class Wall{
     fill(139,69,19);
     rect(leftX, leftY, rightX-leftX, height - leftY);
   }
+  void redraw(){
+    fill(139,69,19);
+    rect(leftX, leftY, rightX-leftX, height - leftY);
+  }
 }
