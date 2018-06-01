@@ -61,20 +61,30 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan((endY-startY)/(endX-startX)));
-
+  if(myTank.direction && (endY-startY) < 0 && endX - startX > 0){
+    p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan((endY-startY)/(endX-startX)));
+  }else if(!myTank.direction && endY - startY < 0 && endX - startX < 0){
+    p = myTank.shoot(-dist(startX, startY, endX, endY)/ 10, PI + atan((endY-startY)/(endX-startX)));
+  }
 }
 
 //creates line to represent initial velocity & angle
 void makeline(){
-stroke(255,255, 255);
+  //Makes arrow representing initial velocity
+  stroke(255,69,0);
+  pushMatrix();
+  translate(endX, endY);
+  rotate(atan((endY-startY)/(endX-startX)));
+  triangle(-10,-7, -10,7, 0,0);
+  popMatrix();
   line(startX, startY, endX, endY);
   pushMatrix();
   translate(myTank.xcoor+33, myTank.ycoor + 7);
-  rotate(atan((endY-startY)/(endX-startX)));
+  if(myTank.direction && (endY-startY) < 0 && endX - startX > 0){
+    rotate(atan((endY-startY)/(endX-startX)));
+  }
   fill(0,100,0);
   stroke(0,100,0);
   rect(0,0, 30, 7);
   popMatrix();
-
 }
