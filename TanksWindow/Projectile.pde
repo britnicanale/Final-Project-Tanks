@@ -46,6 +46,9 @@ class Projectile{
       explodeY = ycoor;
       exploding = true;
     } 
+    if((xcoor > width + 10|| xcoor < 0) || ycoor > height){
+      exists = false;
+    }
   }
   //Called when Projectile collides
   void explode(){

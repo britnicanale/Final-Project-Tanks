@@ -7,6 +7,7 @@ class Wall{
     this.leftY = leftY;
     this.rightX = rightX;
     fill(139,69,19);
+    stroke(139,69,19);
     rect(leftX, leftY, rightX-leftX, height - leftY);
   }
   void redraw(){
