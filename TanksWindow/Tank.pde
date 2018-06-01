@@ -1,3 +1,4 @@
+import processing.sound.*;
 class Tank{
   float xcoor, ycoor;
   boolean isHit;
@@ -11,6 +12,7 @@ class Tank{
   }
   
   Projectile shoot(float velocity, float angle){
+    shoot.play();
     return new Projectile(xcoor + 60, ycoor, velocity, angle);
   }
   void redraw(){

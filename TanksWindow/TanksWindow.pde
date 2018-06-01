@@ -1,7 +1,10 @@
+import processing.sound.*;
+
 Tank myTank;
 Tank[] tanks;
 Wall[] walls;
 Projectile p;
+SoundFile shoot, explosion;
 
 
 void setup(){
@@ -13,7 +16,8 @@ void setup(){
   tanks = new Tank[1];
   tanks[0] = new Tank( walls[1].rightX + 200, walls[0].leftY - 30);
   myTank = new Tank(walls[1].leftX / 2 - 60, walls[0].leftY - 30);
-
+  shoot = new SoundFile(this, "tanksound.mp3");
+  explosion = new SoundFile(this, "explodesound.mp3");
 }
 
 void rescreen(){

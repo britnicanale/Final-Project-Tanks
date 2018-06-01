@@ -38,10 +38,8 @@ class Projectile{
     fill(255,69,0);
     ellipse(xcoor, ycoor, 15, 15);
     Object obj = collide();
-    if(obj instanceof Wall){
-      println("Wall");
-    }
     if(obj != null){
+      explosion.play();
       exists = false;
       explodeframe = frameCount;
       explodeX = xcoor;
