@@ -1,10 +1,10 @@
 import processing.sound.*;
 
-Tank myTank;
-Tank[] tanks;
+Tank myTank, yourTank;
 Wall[] walls;
 Projectile p;
 SoundFile shoot, explosion;
+boolean turn;
 
 
 void setup(){
@@ -13,12 +13,10 @@ void setup(){
   walls = new Wall[2];
   walls[0] = new Wall(0, height * 2 / 3, width);
   walls[1] = new Wall(225, 150, 275);
-  tanks = new Tank[1];
-  tanks[0] = new Tank( walls[1].rightX + 200, walls[0].leftY - 30, false);
+  yourTank = new Tank( walls[1].rightX + 200, walls[0].leftY - 30, false);
   myTank = new Tank(walls[1].leftX / 2 - 60, walls[0].leftY - 30, true);
   fill(0,100,0);
   stroke(0,100,0);
-  rect(myTank.xcoor + 33, myTank.ycoor, 30, 7);
   shoot = new SoundFile(this, "tanksound.mp3");
   explosion = new SoundFile(this, "explodesound.mp3");
 }
@@ -28,10 +26,8 @@ void rescreen(){
    for(int i = 0; i < walls.length;i++){
      walls[i].redraw();
    }
-   for(int i = 0; i < tanks.length;i++){
-     tanks[i].redraw();
-   }
    myTank.redraw();
+   yourTank.redraw();
 }
    
 void draw(){
@@ -61,11 +57,7 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  if(myTank.direction && (endY-startY) < 0 && endX - startX > 0){
-    p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan((endY-startY)/(endX-startX)));
-  }else if(!myTank.direction && endY - startY < 0 && endX - startX < 0){
-    p = myTank.shoot(-dist(startX, startY, endX, endY)/ 10, PI + atan((endY-startY)/(endX-startX)));
-  }
+    p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan2(endY-startY, endX-startX));
 }
 
 //creates line to represent initial velocity & angle
@@ -74,15 +66,13 @@ void makeline(){
   stroke(255,69,0);
   pushMatrix();
   translate(endX, endY);
-  rotate(atan((endY-startY)/(endX-startX)));
+  rotate(atan2(endY-startY, endX-startX));
   triangle(-10,-7, -10,7, 0,0);
   popMatrix();
   line(startX, startY, endX, endY);
   pushMatrix();
   translate(myTank.xcoor+33, myTank.ycoor + 7);
-  if(myTank.direction && (endY-startY) < 0 && endX - startX > 0){
-    rotate(atan((endY-startY)/(endX-startX)));
-  }
+  rotate(atan2(endY-startY,endX-startX));
   fill(0,100,0);
   stroke(0,100,0);
   rect(0,0, 30, 7);

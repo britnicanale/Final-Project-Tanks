@@ -24,11 +24,13 @@ class Projectile{
         return walls[i];
       }
     }
-    for(int i = 0; i < tanks.length; i++){
-      if( xcoor >= tanks[i].xcoor && ycoor >= tanks[i].ycoor && xcoor < tanks[i].xcoor + 60){
-        return tanks[i];
+      if( xcoor >= myTank.xcoor && ycoor >= myTank.ycoor && xcoor < myTank.xcoor + 60){
+        return myTank;
       }
-    }
+      if( xcoor >= yourTank.xcoor && ycoor >= yourTank.ycoor && xcoor < yourTank.xcoor + 60){
+        return yourTank;
+      }
+  
     return null;
   }
   void move(){
@@ -50,13 +52,15 @@ class Projectile{
       exists = false;
     }
   }
+  
   //Called when Projectile collides
+  
   void explode(){
-    //insert explode animation
-    rescreen();
-    image(explode, explodeX - (frameCount - explodeframe)*8, explodeY - (frameCount - explodeframe)*8, (frameCount - explodeframe)*16, (frameCount - explodeframe)*16);
-    exploding = frameCount < explodeframe + 12;
-    if(!exploding){
+  //insert explode animation
+  rescreen();
+  image(explode, explodeX - (frameCount - explodeframe)*8, explodeY - (frameCount - explodeframe)*8, (frameCount - explodeframe)*16, (frameCount - explodeframe)*16);
+  exploding = frameCount < explodeframe + 12;
+  if(!exploding){
     rescreen();  
     exists = false;
   }

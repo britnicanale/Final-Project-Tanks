@@ -18,6 +18,10 @@ class Tank{
       tank = loadImage("tankleft.png");
     }
     image(tank, xcoor, ycoor, 60, 30);
+  fill(0,100,0);
+    if(direction){
+    rect(myTank.xcoor + 33, myTank.ycoor, 30, 7);
+    }
   }
   
   Projectile shoot(float velocity, float angle){
