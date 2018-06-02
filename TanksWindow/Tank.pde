@@ -29,7 +29,11 @@ class Tank{
   
   Projectile shoot(float velocity, float angle){
     shoot.play();
-    return new Projectile(xcoor + 60, ycoor, velocity, angle);
+    if(direction){
+    return new Projectile(xcoor+33, ycoor + 7, velocity, angle);
+    }else{
+      return new Projectile(xcoor + 25, ycoor + 7, velocity, angle);
+    }
   }
   void redraw(){
      image(tank, xcoor, ycoor, 60, 30);
@@ -47,6 +51,7 @@ class Tank{
   void setExploding(boolean exp){
     exploding = exp;
   }
+  
   //called while the tank is still exploding
   void explode(){
 image(explode, xcoor - (frameCount - explodeFrame)*8, ycoor - (frameCount - explodeFrame)*8, (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*16);

@@ -1,5 +1,7 @@
 import processing.sound.*;
+import controlP5.*;
 
+ControlP5 cp5;
 Tank myTank, yourTank;
 Wall[] walls;
 Projectile p;
@@ -8,7 +10,10 @@ boolean turn;
 
 
 void setup(){
-  size(800, 600);
+ size(600, 400);
+ setupTanksWindow();
+}
+void setupTanksWindow(){
   background(135,206,250);
   walls = new Wall[2];
   walls[0] = new Wall(0, height * 2 / 3, width);
