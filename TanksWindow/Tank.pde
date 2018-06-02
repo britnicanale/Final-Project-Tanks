@@ -1,7 +1,7 @@
 import processing.sound.*;
 class Tank{
   float xcoor, ycoor;
-  boolean isHit;
+  boolean exploding;
   boolean direction; //direction tank is facing: true is right, false is left
   PImage tank;
   
@@ -44,9 +44,10 @@ class Tank{
         }
      }
   }
+  void setExploding(boolean exp){
+    exploding = exp;
+  }
   void explode(){
-    if(isHit){
-      //explode stuff
-    }
+
   }
 }

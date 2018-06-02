@@ -49,6 +49,9 @@ class Projectile{
       explodeY = ycoor;
       exploding = true;
     } 
+    if(obj instanceof Tank){
+      //
+    }
     if((xcoor > width + 10|| xcoor < 0) || ycoor > height){
       exists = false;
     }
