@@ -3,7 +3,7 @@ import processing.sound.*;
 Tank myTank, yourTank;
 Wall[] walls;
 Projectile p;
-SoundFile shoot, explosion;
+SoundFile shoot, explosion, tankExplosion;
 boolean turn;
 
 
@@ -37,7 +37,13 @@ void draw(){
     p.move();
   }else if(p != null && !p.exists && p.exploding){
       p.explode();
-  }  
+  }
+  if(myTank.exploding){
+    myTank.explode();
+  }
+  if(yourTank.exploding){
+    yourTank.explode();
+  }
 }
 
 float startX, startY, endX, endY;

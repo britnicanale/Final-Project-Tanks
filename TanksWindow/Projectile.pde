@@ -50,7 +50,10 @@ class Projectile{
       exploding = true;
     } 
     if(obj instanceof Tank){
-      //
+      //obj.setExploding(true); WHY DOESN"T THIS WORK
+      Tank t = (Tank) obj;
+      t.setExploding(true);
+      t.explodeFrame = frameCount;
     }
     if((xcoor > width + 10|| xcoor < 0) || ycoor > height){
       exists = false;
