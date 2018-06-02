@@ -19,6 +19,7 @@ void setup(){
   stroke(0,100,0);
   shoot = new SoundFile(this, "tanksound.mp3");
   explosion = new SoundFile(this, "explodesound.mp3");
+  turn = true;
 }
 
 void rescreen(){
@@ -43,8 +44,13 @@ float startX, startY, endX, endY;
 void mousePressed(){
   endX = mouseX;
   endY = mouseY;
+  if(turn){
   startX = myTank.xcoor+33;
   startY = myTank.ycoor + 7;
+  }else{
+    startX = yourTank.xcoor+25;
+  startY = yourTank.ycoor + 7;
+  }
   makeline();
 }
 
@@ -57,7 +63,12 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
+  if(turn){
     p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan2(endY-startY, endX-startX));
+  }else{
+    p = yourTank.shoot(dist(startX, startY, endX, endY)/ 10, atan2(endY-startY, endX-startX));
+  }
+  turn = !turn;
 }
 
 //creates line to represent initial velocity & angle
@@ -71,7 +82,11 @@ void makeline(){
   popMatrix();
   line(startX, startY, endX, endY);
   pushMatrix();
+  if(turn){
   translate(myTank.xcoor+33, myTank.ycoor + 7);
+  }else{
+     translate(yourTank.xcoor+25, yourTank.ycoor + 7);
+  }
   rotate(atan2(endY-startY,endX-startX));
   fill(0,100,0);
   stroke(0,100,0);

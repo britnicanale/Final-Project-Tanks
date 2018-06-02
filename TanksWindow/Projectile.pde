@@ -6,6 +6,7 @@ class Projectile{
    PImage explode = loadImage("explosion.png");
    float explodeframe = 0;
   float explodeX, explodeY;
+  
   Projectile(float xcoor, float ycoor, float initVelocity, float initAngle){
     this.xcoor = xcoor;
     this.ycoor = ycoor;
@@ -54,6 +55,7 @@ class Projectile{
   }
   
   //Called when Projectile collides
+
   
   void explode(){
   //insert explode animation

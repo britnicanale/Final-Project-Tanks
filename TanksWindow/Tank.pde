@@ -19,8 +19,11 @@ class Tank{
     }
     image(tank, xcoor, ycoor, 60, 30);
   fill(0,100,0);
+  stroke(0,100,0);
     if(direction){
-    rect(myTank.xcoor + 33, myTank.ycoor, 30, 7);
+    rect(xcoor + 33, ycoor, 30, 7);
+    }else{
+      rect(xcoor+ 25, ycoor, -30, 7);
     }
   }
   
@@ -32,7 +35,13 @@ class Tank{
      image(tank, xcoor, ycoor, 60, 30);
      if(!mousePressed){
         fill(0,100,0);
-       rect(myTank.xcoor + 33, myTank.ycoor, 30, 7);
+        stroke(0,100,0);
+        if(direction){
+       rect(xcoor + 33, ycoor, 30, 7);
+        }
+        else{
+           rect(xcoor+ 25, ycoor, -30, 7);
+        }
      }
   }
   void explode(){
