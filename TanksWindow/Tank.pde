@@ -6,6 +6,7 @@ class Tank{
   PImage tank;
   float explodeFrame = 0;
   PImage explode = loadImage("explosion.png");
+  float numHits;
   
   Tank(float xcoor, float ycoor, boolean dir){
     this.xcoor = xcoor;
