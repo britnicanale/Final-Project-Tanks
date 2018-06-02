@@ -47,10 +47,10 @@ class Tank{
   void setExploding(boolean exp){
     exploding = exp;
   }
-  
+  //called while the tank is still exploding
   void explode(){
-image(explode, xcoor - (frameCount - explodeFrame)*16, ycoor - (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*32, (frameCount - explodeFrame)*32);
-  exploding = frameCount < explodeFrame + 12;
+image(explode, xcoor - (frameCount - explodeFrame)*8, ycoor - (frameCount - explodeFrame)*8, (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*16);
+  exploding = frameCount < explodeFrame + 48;
   if(!exploding){
     rescreen();
   }

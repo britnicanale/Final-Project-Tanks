@@ -19,6 +19,7 @@ void setup(){
   stroke(0,100,0);
   shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
   explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
+  tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
   turn = true;
 }
 

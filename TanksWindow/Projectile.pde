@@ -52,6 +52,7 @@ class Projectile{
     if(obj instanceof Tank){
       //obj.setExploding(true); WHY DOESN"T THIS WORK
       Tank t = (Tank) obj;
+      tankExplosion.play();
       t.setExploding(true);
       t.explodeFrame = frameCount;
     }
