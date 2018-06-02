@@ -7,35 +7,46 @@ Wall[] walls;
 Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn;
-boolean tankwindow, startwindow;
-Button start;
-Textlabel tanks;
+boolean tankwindow, startwindow, howtoplaywindow;
+Button start, howtoplay, htpstart;
+Textlabel tanks, howtoplaylabel;
+Textarea instructions;
 
 
 void setup(){
  size(600, 400);
  cp5 = new ControlP5(this);
  tankwindow = false;
+ howtoplaywindow = false;
  setupStartWindow();
+ shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
+  explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
+  tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
 }
 
 void setupStartWindow(){
-   startwindow = true;
+  startwindow = true;
   background(135,206,250);
   tanks = cp5.addTextlabel("TANKS")
- .setText("TANKS")
- .setPosition(width/2 - 87.5, 50)
- .setSize(175,50)
- .setFont(createFont("armalite.ttf",50))
- .setLineHeight(14)
- .setColor(0)
- ;
-start = cp5.addButton("Start")
-.setLabel("Start")
-.setSize(100,50)
-.setPosition(width/2 - 50, 150)
-.setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
-;
+   .setText("TANKS")
+   .setPosition(width/2 - 87.5, 50)
+   .setSize(175,50)
+   .setFont(createFont("armalite.ttf",50))
+   .setLineHeight(14)
+   .setColor(0)
+   ;
+  start = cp5.addButton("Start")
+  .setLabel("Start")  
+  .setSize(100,50)
+  .setPosition(width/2 - 50, 150)
+  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
+  ;
+  howtoplay = cp5.addButton("How To Play")
+  .setLabel("How To Play")
+  .setSize(100,50)
+  .setPosition(width/2 - 50, 225)
+  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
+  ;
 }
 
 void setupTanksWindow(){
@@ -48,13 +59,34 @@ void setupTanksWindow(){
   myTank = new Tank(walls[1].leftX / 2 - 60, walls[0].leftY - 30, true);
   fill(0,100,0);
   stroke(0,100,0);
-  shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
-  explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
-  tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
   turn = true;
   tankwindow = true;
 }
 
+void setupHowToPlayWindow(){
+  background(135,206,250);
+  instructions = cp5.addTextarea("instructions")
+  .setPosition(width/2 - 125, 125)
+  .setSize(300, height - 150)
+  .setColor(0)
+  .setFont(createFont("arial",18))
+  .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
+  ;
+  howtoplaylabel = cp5.addLabel("howtoplay")
+  .setPosition(width/2 - 112, 75)
+  .setSize(225,50)
+  .setColor(0)
+  .setText("How To Play")
+  .setFont(createFont("armalite.ttf",35));
+  ;
+  htpstart = cp5.addButton("HTPStart")
+  .setLabel("Start")
+  .setSize(100,50)
+  .setPosition(width/2 - 50, height - 62.5)
+  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
+  ;
+  howtoplaywindow = true;
+}
 void rescreen(){
    background(135,206,250);
    for(int i = 0; i < walls.length;i++){
@@ -66,26 +98,45 @@ void rescreen(){
    
 void draw(){
   if(tankwindow){
-  if(p!= null && p.exists){
-    rescreen();
-    p.move();
-  }else if(p != null && !p.exists && p.exploding){
-      p.explode();
-  }
-  if(myTank.exploding){
-    myTank.explode();
-  }
-  if(yourTank.exploding){
-    yourTank.explode();
-  }
+    if(p!= null && p.exists){
+      rescreen();
+      p.move();
+      }else if(p != null && !p.exists && p.exploding){
+        p.explode();
+    }
+    if(myTank.exploding){
+      myTank.explode();
+    }
+      if(yourTank.exploding){
+      yourTank.explode();
+    }
   }
   if(startwindow){
     if (start.isPressed()){
       setupTanksWindow();
       startwindow = false;
       start.setVisible(false);
+      howtoplay.setVisible(false);
       tanks.setPosition(25, 25);
       tanks.setFont(createFont("armalite.ttf",25));
+    }
+    if(howtoplay.isPressed()){
+      setupHowToPlayWindow();
+      startwindow = false;
+      howtoplay.setVisible(false);
+      start.setVisible(false);
+      tanks.setPosition(25, 25);
+      tanks.setFont(createFont("armalite.ttf",25));
+    }
+  }
+  if(howtoplaywindow){
+    if(htpstart.isPressed()){
+      setupTanksWindow();
+      htpstart.setVisible(false);
+      howtoplay.setVisible(false);
+      tanks.setPosition(25, 25);
+      tanks.setFont(createFont("armalite.ttf",25));
+      howtoplaywindow = false;
     }
   }
 }
