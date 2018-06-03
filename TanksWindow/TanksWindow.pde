@@ -11,6 +11,7 @@ boolean tankwindow, startwindow, howtoplaywindow;
 Button start, howtoplay, htpstart, restart;
 Textlabel tanks, howtoplaylabel, menu;
 Textarea instructions;
+PImage heart;
 
 
 void setup(){
@@ -22,6 +23,7 @@ void setup(){
    shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
    explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
    tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
+   heart =  loadImage("heart.png");
 }
 
 void setupStartWindow(){
@@ -52,11 +54,12 @@ void setupStartWindow(){
 void setupTanksWindow(){
 
   background(135,206,250);
-  walls = new Wall[2];
-  walls[0] = new Wall(0, height * 2 / 3, (width - 200));
-  walls[1] = new Wall(225, 150, 275);
-  yourTank = new Tank( walls[1].rightX + 200, walls[0].leftY - 30, false);
-  myTank = new Tank(walls[1].leftX / 2 - 60, walls[0].leftY - 30, true);
+  walls = new Wall[3];
+  walls[0] = new Wall(random(225,275), random(50,150), random(325, 375) );
+  walls[1] = new Wall(0, random(200,350), walls[0].leftX);
+  walls[2] = new Wall(walls[0].rightX, random(200,350), width-200);
+  yourTank = new Tank( walls[0].rightX + random(50,150), walls[2].leftY - 30, false);
+  myTank = new Tank(walls[0].leftX - random(100,200), walls[1].leftY - 30, true);
   fill(0,100,0);
   stroke(0,100,0);
 
@@ -78,6 +81,12 @@ void setupTanksWindow(){
    .setColor(new CColor(0, 0, 0, 0xff999999, 0))
    .setPosition(650, 125);
   ;
+  for(int i = 0; i < 5-myTank.numHits; i++){
+    image(heart, myTank.xcoor + i*20, 75, 15, 15);
+  }
+  for(int i = 0; i < 5-yourTank.numHits; i++){
+    image(heart, yourTank.xcoor + i*20, 75, 15, 15);
+  }
 }
 
 void setupHowToPlayWindow(){
@@ -114,6 +123,12 @@ void rescreen(){
    rect(600,0,200,400);
    myTank.redraw();
    yourTank.redraw();
+   for(int i = 0; i < 5-myTank.numHits; i++){
+    image(heart, myTank.xcoor + i*20, 75, 15, 15);
+  }
+  for(int i = 0; i < 5-yourTank.numHits; i++){
+    image(heart, yourTank.xcoor + i*20, 75, 15, 15);
+  }
 }
    
 void draw(){

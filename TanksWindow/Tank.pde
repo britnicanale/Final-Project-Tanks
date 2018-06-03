@@ -1,7 +1,7 @@
 import processing.sound.*;
 class Tank{
   float xcoor, ycoor;
-  boolean exploding;
+  boolean exploding = false;
   boolean direction; //direction tank is facing: true is right, false is left
   PImage tank;
   float explodeFrame = 0;
@@ -29,6 +29,7 @@ class Tank{
   }
   
   Projectile shoot(float velocity, float angle){
+    print("Shoot");
     shoot.play();
     if(direction){
     return new Projectile(xcoor+33, ycoor + 7, velocity, angle);
@@ -51,6 +52,10 @@ class Tank{
   }
   void setExploding(boolean exp){
     exploding = exp;
+    numHits++;
+    if(numHits >= 5){
+      //GAME OVER
+    }
   }
   
   //called while the tank is still exploding
