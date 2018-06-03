@@ -56,8 +56,10 @@ class Projectile{
       t.setExploding(true);
       t.explodeFrame = frameCount;
     }
-    if((xcoor > width + 10|| xcoor < 0) || ycoor > height){
+    if((xcoor > width - 200 || xcoor < 0) || ycoor > height){
+        explosion.play();
       exists = false;
+      rescreen();
     }
   }
   

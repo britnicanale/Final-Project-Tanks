@@ -8,20 +8,20 @@ Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn;
 boolean tankwindow, startwindow, howtoplaywindow;
-Button start, howtoplay, htpstart;
-Textlabel tanks, howtoplaylabel;
+Button start, howtoplay, htpstart, restart;
+Textlabel tanks, howtoplaylabel, menu;
 Textarea instructions;
 
 
 void setup(){
- size(600, 400);
- cp5 = new ControlP5(this);
- tankwindow = false;
- howtoplaywindow = false;
- setupStartWindow();
- shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
-  explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
-  tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
+   size(800, 400);
+   cp5 = new ControlP5(this);
+   tankwindow = false;
+   howtoplaywindow = false;
+   setupStartWindow();
+   shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
+   explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
+   tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
 }
 
 void setupStartWindow(){
@@ -53,14 +53,31 @@ void setupTanksWindow(){
 
   background(135,206,250);
   walls = new Wall[2];
-  walls[0] = new Wall(0, height * 2 / 3, width);
+  walls[0] = new Wall(0, height * 2 / 3, (width - 200));
   walls[1] = new Wall(225, 150, 275);
   yourTank = new Tank( walls[1].rightX + 200, walls[0].leftY - 30, false);
   myTank = new Tank(walls[1].leftX / 2 - 60, walls[0].leftY - 30, true);
   fill(0,100,0);
   stroke(0,100,0);
-  turn = true;
+
+  rect(600,0,200,400);
+  
+  turn = false;
   tankwindow = true;
+  menu = cp5.addTextlabel("Menu")
+  .setLabel("Menu")
+  .setFont(createFont("armalite.ttf",35))
+  .setSize(100,50)
+  .setColor(99)
+  .setVisible(true)
+  .setPosition(650, 50);
+  ;
+  restart = cp5.addButton("Restart")
+   .setLabel("Restart")
+   .setSize(100,50)
+   .setColor(new CColor(0, 0, 0, 0xff999999, 0))
+   .setPosition(650, 125);
+  ;
 }
 
 void setupHowToPlayWindow(){
@@ -92,6 +109,9 @@ void rescreen(){
    for(int i = 0; i < walls.length;i++){
      walls[i].redraw();
    }
+   fill(0,100,0);
+   stroke(0,100,0);
+   rect(600,0,200,400);
    myTank.redraw();
    yourTank.redraw();
 }
@@ -109,6 +129,10 @@ void draw(){
     }
       if(yourTank.exploding){
       yourTank.explode();
+    }
+    if(restart.isPressed()){
+      tankwindow = false;
+      setupStartWindow();
     }
   }
   if(startwindow){
@@ -143,7 +167,7 @@ void draw(){
 
 float startX, startY, endX, endY;
 void mousePressed(){
-  if(tankwindow){
+  if(tankwindow && mouseX < 600){
   endX = mouseX;
   endY = mouseY;
   if(turn){
@@ -159,7 +183,7 @@ void mousePressed(){
 
 
 void mouseDragged(){
-  if(tankwindow){
+  if(tankwindow && mouseX < 600){
  endX = mouseX;
  endY = mouseY;
  rescreen();
@@ -168,7 +192,7 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  if(tankwindow){
+  if(tankwindow && mouseX < 600){
   if(turn){
     p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan2(endY-startY, endX-startX));
   }else{
@@ -181,24 +205,24 @@ void mouseReleased(){
 //creates line to represent initial velocity & angle
 void makeline(){ 
   if(tankwindow){
-  //Makes arrow representing initial velocity
-  stroke(255,69,0);
-  pushMatrix();
-  translate(endX, endY);
-  rotate(atan2(endY-startY, endX-startX));
-  triangle(-10,-7, -10,7, 0,0);
-  popMatrix();
-  line(startX, startY, endX, endY);
-  pushMatrix();
-  if(turn){
-  translate(myTank.xcoor+33, myTank.ycoor + 7);
-  }else{
-     translate(yourTank.xcoor+25, yourTank.ycoor + 7);
-  }
-  rotate(atan2(endY-startY,endX-startX));
-  fill(0,100,0);
-  stroke(0,100,0);
-  rect(0,0, 30, 7);
-  popMatrix();
+    //Makes arrow representing initial velocity
+    stroke(255,69,0);
+    pushMatrix();
+    translate(endX, endY);
+    rotate(atan2(endY-startY, endX-startX));
+    triangle(-10,-7, -10,7, 0,0);
+    popMatrix();
+    line(startX, startY, endX, endY);
+    pushMatrix();
+    if(turn){
+      translate(myTank.xcoor+33, myTank.ycoor + 7);
+    }else{
+      translate(yourTank.xcoor+25, yourTank.ycoor + 7);
+    }
+    rotate(atan2(endY-startY,endX-startX));
+    fill(0,100,0);
+    stroke(0,100,0);
+    rect(0,0, 30, 7);
+    popMatrix();
   }
 }
