@@ -12,7 +12,7 @@ Button start, howtoplay, htpstart, restart;
 Textlabel tanks, howtoplaylabel, menu;
 Textarea instructions;
 PImage heart;
-
+float wind = 0;
 
 void setup(){
    size(800, 400);
@@ -24,6 +24,7 @@ void setup(){
    explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
    tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
    heart =  loadImage("heart.png");
+   p  = new Projectile(-10,-10,0,0);//Initializes a projectile off screen
 }
 
 void setupStartWindow(){
@@ -66,7 +67,6 @@ void setupTanksWindow(){
   rect(600,0,200,400);
   
   turn = false;
-  tankwindow = true;
   menu = cp5.addTextlabel("Menu")
   .setLabel("Menu")
   .setFont(createFont("armalite.ttf",35))
@@ -87,6 +87,9 @@ void setupTanksWindow(){
   for(int i = 0; i < 5-yourTank.numHits; i++){
     image(heart, yourTank.xcoor + i*20, 75, 15, 15);
   }
+  stroke(256,256, 256);
+  line(300, 25, 300+ 200* wind, 25);
+    tankwindow = true;
 }
 
 void setupHowToPlayWindow(){
@@ -129,6 +132,8 @@ void rescreen(){
   for(int i = 0; i < 5-yourTank.numHits; i++){
     image(heart, yourTank.xcoor + i*20, 75, 15, 15);
   }
+  stroke(256,256, 256);
+  line(300, 25, 300+ 200* wind, 25);
 }
    
 void draw(){
@@ -182,7 +187,7 @@ void draw(){
 
 float startX, startY, endX, endY;
 void mousePressed(){
-  if(tankwindow && mouseX < 600){
+  if(tankwindow && mouseX < 600 && !p.exists){
   endX = mouseX;
   endY = mouseY;
   if(turn){
@@ -198,7 +203,7 @@ void mousePressed(){
 
 
 void mouseDragged(){
-  if(tankwindow && mouseX < 600){
+  if(tankwindow && mouseX < 600 && !p.exists){
  endX = mouseX;
  endY = mouseY;
  rescreen();
@@ -207,7 +212,7 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  if(tankwindow && mouseX < 600){
+  if(tankwindow && mouseX < 600 && !p.exists){
   if(turn){
     p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan2(endY-startY, endX-startX));
   }else{

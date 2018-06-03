@@ -29,7 +29,7 @@ class Tank{
   }
   
   Projectile shoot(float velocity, float angle){
-    print("Shoot");
+    print(p.xacc);
     shoot.play();
     if(direction){
     return new Projectile(xcoor+33, ycoor + 7, velocity, angle);

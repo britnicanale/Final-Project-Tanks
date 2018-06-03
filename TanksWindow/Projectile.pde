@@ -1,5 +1,5 @@
 class Projectile{
-  float xcoor, ycoor, velocity, angle, xvel, yvel;
+  float xcoor, ycoor, velocity, angle, xvel, initXvel, yvel, xacc;
   static final float yacc = .5;
   boolean exists = true;
   boolean exploding = false;
@@ -15,6 +15,7 @@ class Projectile{
     fill(255,69,0);
     ellipse(xcoor, ycoor, 15, 15);
     xvel = velocity * cos(angle);
+    initXvel = xvel;
     yvel = velocity * sin(angle);
   }
   
@@ -22,22 +23,38 @@ class Projectile{
   Object collide(){
     for(int i = 0; i < walls.length; i++){
       if(xcoor >= walls[i].leftX && ycoor >= walls[i].leftY && xcoor < walls[i].rightX){
+        if(turn){
+          wind = random(-.2, .2);
+          xacc = wind;
+          xvel = initXvel;
+        }
         return walls[i];
       }
     }
       if( xcoor >= myTank.xcoor && ycoor >= myTank.ycoor && xcoor < myTank.xcoor + 60){
-        return myTank;
+        if(turn){
+          wind = random(-.2, .2);
+          xacc = wind;
+          xvel = initXvel;
+        }
+         return myTank;
       }
       if( xcoor >= yourTank.xcoor && ycoor >= yourTank.ycoor && xcoor < yourTank.xcoor + 60){
+        if(turn){
+          wind = random(-.2, .2);
+          xacc = wind;
+          xvel = initXvel;
+      }
         return yourTank;
       }
   
     return null;
   }
   void move(){
+     yvel += yacc;
+    xvel += xacc;
     xcoor += xvel;
     ycoor += yvel;
-    yvel += yacc;
     fill(255,69,0);
     ellipse(xcoor, ycoor, 15, 15);
     Object obj = collide();
@@ -60,6 +77,11 @@ class Projectile{
         explosion.play();
       exists = false;
       rescreen();
+      if(turn){
+        wind = random(-.2, .2);
+        xacc = wind;
+        xvel = initXvel;
+    }
     }
   }
   
@@ -71,6 +93,8 @@ class Projectile{
   rescreen();
   image(explode, explodeX - (frameCount - explodeframe)*8, explodeY - (frameCount - explodeframe)*8, (frameCount - explodeframe)*16, (frameCount - explodeframe)*16);
   exploding = frameCount < explodeframe + 12;
+  if(frameCount > explodeframe + 12){
+  }
   if(!exploding){
     rescreen();  
     exists = false;
