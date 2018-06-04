@@ -7,11 +7,13 @@ class Tank{
   float explodeFrame = 0;
   PImage explode = loadImage("explosion.png");
   float numHits;
+  String name;
   
-  Tank(float xcoor, float ycoor, boolean dir){
+  Tank(float xcoor, float ycoor, boolean dir, String n){
     this.xcoor = xcoor;
     this.ycoor = ycoor;
     direction = dir;
+    name = n;
     if(direction){
       tank = loadImage("tankright.png");
     }
@@ -54,13 +56,14 @@ class Tank{
     exploding = exp;
     numHits++;
     if(numHits >= 5){
-      //GAME OVER
+      tankwindow = false;
+      
     }
   }
   
   //called while the tank is still exploding
   void explode(){
-image(explode, xcoor - (frameCount - explodeFrame)*8, ycoor - (frameCount - explodeFrame)*8, (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*16);
+  image(explode, xcoor - (frameCount - explodeFrame)*8, ycoor - (frameCount - explodeFrame)*8, (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*16);
   exploding = frameCount < explodeFrame + 48;
   if(!exploding){
     rescreen();

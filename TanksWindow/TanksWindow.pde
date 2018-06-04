@@ -59,8 +59,8 @@ void setupTanksWindow(){
   walls[0] = new Wall(random(225,275), random(50,150), random(325, 375) );
   walls[1] = new Wall(0, random(200,350), walls[0].leftX);
   walls[2] = new Wall(walls[0].rightX, random(200,350), width-200);
-  yourTank = new Tank( walls[0].rightX + random(50,150), walls[2].leftY - 30, false);
-  myTank = new Tank(walls[0].leftX - random(100,200), walls[1].leftY - 30, true);
+  yourTank = new Tank( walls[0].rightX + random(50,150), walls[2].leftY - 30, false, "Player 2");
+  myTank = new Tank(walls[0].leftX - random(100,200), walls[1].leftY - 30, true, "Player 1");
   fill(0,100,0);
   stroke(0,100,0);
 
@@ -154,6 +154,12 @@ void setupHTPTanks(){
   ;
   htptankswindow = true;
 }
+
+void setupWinnerWindow(String name){
+  congrats = cp5.addTextlabel("Congrats")
+  .setLabel("Congrats " + name + "!");
+  ;
+}
 void rescreen(){
    background(135,206,250);
    for(int i = 0; i < walls.length;i++){
@@ -225,6 +231,7 @@ void draw(){
        .setPosition(650, 125);
       ;
       instructions.remove();
+      p  = new Projectile(-10,-10,0,0);//Initializes a projectile off screen
       tankwindow = true;
     }
   }
