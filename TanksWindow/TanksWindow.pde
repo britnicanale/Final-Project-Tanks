@@ -7,8 +7,8 @@ Wall[] walls;
 Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn;
-boolean tankwindow, startwindow, howtoplaywindow;
-Button start, howtoplay, htpstart, restart;
+boolean tankwindow, startwindow, howtoplaywindow, htptankswindow;
+Button start, howtoplay, htpstart, restart, htptanks, resume;
 Textlabel tanks, howtoplaylabel, menu;
 Textarea instructions;
 PImage heart;
@@ -67,22 +67,20 @@ void setupTanksWindow(){
   rect(600,0,200,400);
   
   turn = false;
- menu = cp5.addTextlabel("Menu")
-  .setLabel("Menu")
-  .setFont(createFont("armalite.ttf",20))
+ tanks = cp5.addTextlabel("TANKS")
+ .setText("TANKS")
+ .setPosition(25,25)
+ .setSize(175,50)
+ .setFont(createFont("armalite.ttf",50))
+ .setLineHeight(14)
+ .setColor(0)
+ ;
+ htptanks = cp5.addButton("How to Play")
+ .setLabel("How To Play")
   .setSize(100,50)
-  .setColor(0)
-  .setPosition(650, 50);
+  .setPosition(650, 50)
+  .setColor(new CColor(0, 0, 0, 0xff999999, 0));
   ;
-  tanks = cp5.addTextlabel("TANKS")
-   .setText("TANKS")
-   .setPosition(25,25)
-   .setSize(175,50)
-   .setFont(createFont("armalite.ttf",50))
-   .setLineHeight(14)
-   .setColor(0)
-   ;
- 
   restart = cp5.addButton("Restart")
    .setLabel("Restart")
    .setSize(100,50)
@@ -115,6 +113,13 @@ void setupHowToPlayWindow(){
   .setFont(createFont("arial",18))
   .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
   ;
+  tanks = cp5.addTextlabel("TANKS")
+ .setText("TANKS")
+ .setPosition(25,25)
+ .setSize(175,50)
+ .setFont(createFont("armalite.ttf",50))
+ .setColor(0)
+ ;
   howtoplaylabel = cp5.addLabel("howtoplay")
   .setPosition(width/2 - 112, 75)
   .setSize(225,50)
@@ -129,6 +134,25 @@ void setupHowToPlayWindow(){
   .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
   ;
   howtoplaywindow = true;
+}
+void setupHTPTanks(){
+  fill(0);
+  stroke(0);
+  rect(100,75,400, 300);
+  instructions = cp5.addTextarea("instructions")
+  .setPosition(125, 150)
+  .setSize(350, 150)
+  .setColor(99)
+  .setFont(createFont("arial",18))
+  .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
+  ;
+  resume = cp5.addButton("Resume")
+  .setLabel("Resume")
+  .setSize(100,50)
+  .setPosition(width/2 - 50, 325)
+  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
+  ;
+  htptankswindow = true;
 }
 void rescreen(){
    background(135,206,250);
@@ -174,6 +198,34 @@ void draw(){
       tankwindow = false;
       restart.remove();
       setupStartWindow();
+      htptanks.remove();
+    }
+    if(htptanks.isPressed()){
+      tankwindow = false;
+      setupHTPTanks();
+      htptanks.remove();
+      restart.remove();
+    }
+  }
+  if(htptankswindow){
+    if(resume.isPressed()){
+      resume.remove();
+      rescreen();
+      htptankswindow = false;
+      htptanks = cp5.addButton("How to Play")
+       .setLabel("How To Play")
+        .setSize(100,50)
+        .setPosition(650, 50)
+        .setColor(new CColor(0, 0, 0, 0xff999999, 0));
+        ;
+      restart = cp5.addButton("Restart")
+       .setLabel("Restart")
+       .setSize(100,50)
+       .setColor(new CColor(0, 0, 0, 0xff999999, 0))
+       .setPosition(650, 125);
+      ;
+      instructions.remove();
+      tankwindow = true;
     }
   }
   if(startwindow){
@@ -190,7 +242,7 @@ void draw(){
       startwindow = false;
       howtoplay.remove();
       start.remove();
-      tanks.setPosition(25, 25);
+      tanks.remove();
       tanks.setFont(createFont("armalite.ttf",25));
     }
   }
