@@ -51,10 +51,12 @@ class Projectile{
     return null;
   }
   void move(){
+    xacc = wind;
      yvel += yacc;
     xvel += xacc;
     xcoor += xvel;
     ycoor += yvel;
+    print(xacc);
     fill(255,69,0);
     ellipse(xcoor, ycoor, 15, 15);
     Object obj = collide();

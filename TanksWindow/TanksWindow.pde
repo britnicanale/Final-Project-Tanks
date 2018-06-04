@@ -12,7 +12,7 @@ Button start, howtoplay, htpstart, restart;
 Textlabel tanks, howtoplaylabel, menu;
 Textarea instructions;
 PImage heart;
-float wind = 0;
+float wind;
 
 void setup(){
    size(800, 400);
