@@ -67,14 +67,22 @@ void setupTanksWindow(){
   rect(600,0,200,400);
   
   turn = false;
-  menu = cp5.addTextlabel("Menu")
+ menu = cp5.addTextlabel("Menu")
   .setLabel("Menu")
-  .setFont(createFont("armalite.ttf",35))
+  .setFont(createFont("armalite.ttf",20))
   .setSize(100,50)
-  .setColor(99)
-  .setVisible(true)
+  .setColor(0)
   .setPosition(650, 50);
   ;
+  tanks = cp5.addTextlabel("TANKS")
+   .setText("TANKS")
+   .setPosition(25,25)
+   .setSize(175,50)
+   .setFont(createFont("armalite.ttf",50))
+   .setLineHeight(14)
+   .setColor(0)
+   ;
+ 
   restart = cp5.addButton("Restart")
    .setLabel("Restart")
    .setSize(100,50)
@@ -164,6 +172,7 @@ void draw(){
     }
     if(restart.isPressed()){
       tankwindow = false;
+      restart.remove();
       setupStartWindow();
     }
   }
@@ -171,16 +180,16 @@ void draw(){
     if (start.isPressed()){
       setupTanksWindow();
       startwindow = false;
-      start.setVisible(false);
-      howtoplay.setVisible(false);
+      start.remove();
+      howtoplay.remove();
       tanks.setPosition(25, 25);
       tanks.setFont(createFont("armalite.ttf",25));
     }
     if(howtoplay.isPressed()){
       setupHowToPlayWindow();
       startwindow = false;
-      howtoplay.setVisible(false);
-      start.setVisible(false);
+      howtoplay.remove();
+      start.remove();
       tanks.setPosition(25, 25);
       tanks.setFont(createFont("armalite.ttf",25));
     }
@@ -188,9 +197,10 @@ void draw(){
   if(howtoplaywindow){
     if(htpstart.isPressed()){
       setupTanksWindow();
-      htpstart.setVisible(false);
-      howtoplay.setVisible(false);
-      tanks.setPosition(25, 25);
+      htpstart.remove();
+      howtoplaylabel.remove();
+      instructions.remove();
+      tanks.remove();
       tanks.setFont(createFont("armalite.ttf",25));
       howtoplaywindow = false;
     }
