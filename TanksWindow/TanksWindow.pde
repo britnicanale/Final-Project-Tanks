@@ -88,8 +88,14 @@ void setupTanksWindow(){
     image(heart, yourTank.xcoor + i*20, 75, 15, 15);
   }
   stroke(256,256, 256);
+  fill(256,256, 256);
   line(300, 25, 300+ 200* wind, 25);
-    tankwindow = true;
+  tankwindow = true;
+  if(wind>0){
+      triangle(300+ 200* wind, 25, 300+ 200* wind - 7, 20, 300+ 200* wind - 7, 30);
+  }else{
+    triangle(300+ 200* wind, 25, 300+ 200* wind + 7, 20, 300+ 200* wind + 7, 30);
+  }
 }
 
 void setupHowToPlayWindow(){
@@ -133,7 +139,13 @@ void rescreen(){
     image(heart, yourTank.xcoor + i*20, 75, 15, 15);
   }
   stroke(256,256, 256);
+  fill(256,256, 256);
   line(300, 25, 300+ 200* wind, 25);
+  if(wind>0){
+      triangle(300+ 200* wind, 25, 300+ 200* wind - 7, 20, 300+ 200* wind - 7, 30);
+  }else{
+    triangle(300+ 200* wind, 25, 300+ 200* wind + 7, 20, 300+ 200* wind + 7, 30);
+  }
 }
    
 void draw(){
@@ -227,6 +239,7 @@ void makeline(){
   if(tankwindow){
     //Makes arrow representing initial velocity
     stroke(255,69,0);
+    fill(255,69,0);
     pushMatrix();
     translate(endX, endY);
     rotate(atan2(endY-startY, endX-startX));

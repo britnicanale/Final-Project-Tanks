@@ -24,7 +24,7 @@ class Projectile{
     for(int i = 0; i < walls.length; i++){
       if(xcoor >= walls[i].leftX && ycoor >= walls[i].leftY && xcoor < walls[i].rightX){
         if(turn){
-          wind = random(-.2, .2);
+          wind = random(-.1, .1);
           xacc = wind;
           xvel = initXvel;
         }
@@ -33,7 +33,7 @@ class Projectile{
     }
       if( xcoor >= myTank.xcoor && ycoor >= myTank.ycoor && xcoor < myTank.xcoor + 60){
         if(turn){
-          wind = random(-.2, .2);
+          wind = random(-.1, .1);
           xacc = wind;
           xvel = initXvel;
         }
@@ -41,7 +41,7 @@ class Projectile{
       }
       if( xcoor >= yourTank.xcoor && ycoor >= yourTank.ycoor && xcoor < yourTank.xcoor + 60){
         if(turn){
-          wind = random(-.2, .2);
+          wind = random(-.1, .1);
           xacc = wind;
           xvel = initXvel;
       }
@@ -56,7 +56,6 @@ class Projectile{
     xvel += xacc;
     xcoor += xvel;
     ycoor += yvel;
-    print(xacc);
     fill(255,69,0);
     ellipse(xcoor, ycoor, 15, 15);
     Object obj = collide();
@@ -80,7 +79,7 @@ class Projectile{
       exists = false;
       rescreen();
       if(turn){
-        wind = random(-.2, .2);
+        wind = random(-.1, .1);
         xacc = wind;
         xvel = initXvel;
     }
