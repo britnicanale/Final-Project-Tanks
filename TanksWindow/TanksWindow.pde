@@ -9,7 +9,7 @@ SoundFile shoot, explosion, tankExplosion;
 boolean turn;
 boolean tankwindow, startwindow, howtoplaywindow, htptankswindow;
 Button start, howtoplay, htpstart, restart, htptanks, resume;
-Textlabel tanks, howtoplaylabel, menu;
+Textlabel tanks, howtoplaylabel, menu, congrats;
 Textarea instructions;
 PImage heart;
 float wind;
@@ -156,9 +156,12 @@ void setupHTPTanks(){
 }
 
 void setupWinnerWindow(String name){
-  congrats = cp5.addTextlabel("Congrats")
-  .setLabel("Congrats " + name + "!");
-  ;
+  fill(0,100,0);
+   stroke(0,100,0);
+   rect(600,0,200,400);
+ textFont(createFont("armalite.ttf", 35.0));
+ stroke(0,0,0);
+  text("Congrats " + name, 625, 50);
 }
 void rescreen(){
    background(135,206,250);

@@ -55,10 +55,7 @@ class Tank{
   void setExploding(boolean exp){
     exploding = exp;
     numHits++;
-    if(numHits >= 5){
-      tankwindow = false;
-      
-    }
+    
   }
   
   //called while the tank is still exploding
@@ -66,7 +63,18 @@ class Tank{
   image(explode, xcoor - (frameCount - explodeFrame)*8, ycoor - (frameCount - explodeFrame)*8, (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*16);
   exploding = frameCount < explodeFrame + 48;
   if(!exploding){
+    if(numHits >= 5){
+      htptanks.setVisible(false);
+      htptanks.remove();
+      restart.setVisible(false);
+      restart.remove();
+      tanks.remove();
+      setupWinnerWindow(name);
+      tankwindow= false;
+    }else{
     rescreen();
+    }
+    
   }
   }
 }
