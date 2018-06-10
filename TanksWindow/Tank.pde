@@ -70,7 +70,7 @@ class Tank{
       restart.remove();
       tanks.remove();
       setupWinnerWindow(name);
-      tankwindow= false;
+      tankswindow.setVisible(false);
     }else{
     rescreen();
     }
