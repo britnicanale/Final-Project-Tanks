@@ -13,7 +13,7 @@ Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn; // Determines which tank's turn it is; true is left, false is right
 //boolean tankwindow, startwindow, howtoplaywindow, htptankswindow; //determine actions taken for certain buttons depending on window 
-Button start, howtoplay, htpstart, restart, htptanks, resume;
+Button start, howtoplay, htpstart, restart, htptanks, resume, playagain, exit;
 Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel;
 Textarea instructions, twinstructions;
 PImage heart; // For lives
@@ -21,10 +21,6 @@ float wind; //X accelleration representing wind
    
 void setup(){
    size(800, 400);
-   //startwindow = new ControlP5(this);
-   //tankwindow = false;
-   //howtoplaywindow = false;
-   //htptankswindow = false;
    
    shoot = new SoundFile(this, "tanksound.mp3"); // played when tank shoots
    explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
@@ -134,9 +130,22 @@ void createWindows(){
  .setText("Congrats")
  .setPosition(625,50)
  .setSize(175,50)
- .setFont(createFont("armalite.ttf",25))
+ .setFont(createFont("armalite.ttf",15))
  .setColor(0);
  ;
+  
+  playagain = winnerwindow.addButton("Play Again")
+  .setLabel("Play Again")
+  .setPosition(650, 100)
+  .setSize(100,50)
+  .setColor(new CColor(0, 0, 0, 0xff999999, 0));
+  ;
+  exit = winnerwindow.addButton("Exit")
+  .setLabel("Exit")
+  .setPosition(650, 175)
+  .setSize(100,50)
+  .setColor(new CColor(0, 0, 0, 0xff999999, 0));
+  ;
   winnerwindow.setVisible(false);
 }
 void setupStartWindow(){
@@ -299,7 +308,7 @@ void setupWinnerWindow(String name){
  stroke(0,0,0);
   text("Congrats " + name, 625, 50);
   congrats.setVisible(true);*/
-  congratslabel.setLabel("Congrats " + name);
+  congratslabel.setText("Congrats " + name);
   winnerwindow.setVisible(true);
 }
 void rescreen(){
@@ -396,6 +405,15 @@ void draw(){
       instructions.setVisible(false);
       tanks.setVisible(false);*/
       setupTanksWindow();
+    }
+  }
+  if(winnerwindow.isVisible()){
+    if(playagain.isPressed()){
+      winnerwindow.setVisible(false);
+      setupStartWindow();
+    }
+    if(exit.isPressed()){
+      exit();
     }
   }
 }
