@@ -36,18 +36,18 @@ void setup(){
 void createWindows(){
   startwindow = new ControlP5(this);
   tankslabel = startwindow.addTextlabel("TANKSlabel")
- .setText("TANKS")
- .setPosition(212.5,50)
- .setSize(175,50)
- .setFont(createFont("armalite.ttf",50))
- .setColor(0);
- ;
-   start = startwindow.addButton("Start")
+   .setText("TANKS")
+   .setPosition(312.5,50)
+   .setSize(175,50)
+   .setFont(createFont("armalite.ttf",50))
+   .setColor(0);
+   ;
+  start = startwindow.addButton("Start")
   .setLabel("Start")  
   .setSize(100,50)
   .setPosition(width/2 - 50, 150)
   .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
-  ;
+   ;
   howtoplay = startwindow.addButton("How To Play")
   .setLabel("How To Play")
   .setSize(100,50)
@@ -55,16 +55,17 @@ void createWindows(){
   .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
   ;
   startwindow.setVisible(false);
+  
   tankswindow = new ControlP5(this);
   TWtankslabel = tankswindow.addTextlabel("twTANKSlabel")
- .setText("TANKS")
- .setPosition(25,25)
- .setSize(175,50)
- .setFont(createFont("armalite.ttf",25))
- .setColor(0);
- ;
+   .setText("TANKS")
+   .setPosition(25,25)
+   .setSize(175,50)
+   .setFont(createFont("armalite.ttf",25))
+   .setColor(0);
+   ;
  htptanks = tankswindow.addButton("How to Play")
- .setLabel("How To Play")
+  .setLabel("How To Play")
   .setSize(100,50)
   .setPosition(650, 50)
   .setColor(new CColor(0, 0, 0, 0xff999999, 0));
@@ -77,8 +78,7 @@ void createWindows(){
   ;
   tankswindow.setVisible(false);
   
-  howtoplaywindow = new ControlP5(this);
-  
+  howtoplaywindow = new ControlP5(this); 
    instructions = howtoplaywindow.addTextarea("instructions")
   .setPosition(width/2 - 125, 125)
   .setSize(300, height - 150)
@@ -107,14 +107,14 @@ void createWindows(){
   .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
   ;
   howtoplaywindow.setVisible(false);
+
   htptankswindow = new ControlP5(this);
-  
+ 
   twinstructions = htptankswindow.addTextarea("twinstructions")
- .setPosition(125, 150)
+  .setPosition(125, 150)
   .setSize(350, 150)
   .setColor(99)
   .setFont(createFont("arial",18))
-  .setColor(0)
   .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
   ;
   resume = htptankswindow.addButton("Resume")
