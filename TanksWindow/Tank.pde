@@ -64,13 +64,13 @@ class Tank{
   exploding = frameCount < explodeFrame + 48;
   if(!exploding){
     if(numHits >= 5){
-      htptanks.setVisible(false);
+      /*htptanks.setVisible(false);
       htptanks.remove();
       restart.setVisible(false);
       restart.remove();
-      tanks.remove();
-      setupWinnerWindow(name);
+      tanks.remove();*/
       tankswindow.setVisible(false);
+      setupWinnerWindow(name);
     }else{
     rescreen();
     }

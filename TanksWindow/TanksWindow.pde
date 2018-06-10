@@ -14,7 +14,7 @@ SoundFile shoot, explosion, tankExplosion;
 boolean turn; // Determines which tank's turn it is; true is left, false is right
 //boolean tankwindow, startwindow, howtoplaywindow, htptankswindow; //determine actions taken for certain buttons depending on window 
 Button start, howtoplay, htpstart, restart, htptanks, resume;
-Textlabel tanks, TWtanks, howtoplaylabel, congrats, htptankslabel;
+Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel;
 Textarea instructions, twinstructions;
 PImage heart; // For lives
 float wind; //X accelleration representing wind
@@ -39,14 +39,13 @@ void setup(){
 
 void createWindows(){
   startwindow = new ControlP5(this);
-  tanks = startwindow.addTextlabel("TANKS")
-   .setLabel("TANKS")
-   .setPosition(width/2 - 87.5, 50)
-   .setSize(175,50)
-   .setFont(createFont("armalite.ttf",50))
-   .setVisible(true)
-   .setColor(0);
-   ;
+  tankslabel = startwindow.addTextlabel("TANKSlabel")
+ .setText("TANKS")
+ .setPosition(212.5,50)
+ .setSize(175,50)
+ .setFont(createFont("armalite.ttf",50))
+ .setColor(0);
+ ;
    start = startwindow.addButton("Start")
   .setLabel("Start")  
   .setSize(100,50)
@@ -61,9 +60,8 @@ void createWindows(){
   ;
   startwindow.setVisible(false);
   tankswindow = new ControlP5(this);
-  
-  TWtanks = tankswindow.addTextlabel("twTANKS")
- .setLabel("TANKS")
+  TWtankslabel = tankswindow.addTextlabel("twTANKSlabel")
+ .setText("TANKS")
  .setPosition(25,25)
  .setSize(175,50)
  .setFont(createFont("armalite.ttf",25))
@@ -132,14 +130,13 @@ void createWindows(){
   htptankswindow.setVisible(false);
   
   winnerwindow = new ControlP5(this);
-  
-  congrats = winnerwindow.addTextlabel("Congrats")
-  .setSize(100, 50)
-  .setPosition(625, 50)
-  .setColor(0)
-  .setFont(createFont("armalite.ttf",35))
-  .setVisible(false);
-  ;
+  congratslabel = winnerwindow.addTextlabel("congratslabel")
+ .setText("Congrats")
+ .setPosition(625,50)
+ .setSize(175,50)
+ .setFont(createFont("armalite.ttf",25))
+ .setColor(0);
+ ;
   winnerwindow.setVisible(false);
 }
 void setupStartWindow(){
@@ -302,7 +299,7 @@ void setupWinnerWindow(String name){
  stroke(0,0,0);
   text("Congrats " + name, 625, 50);
   congrats.setVisible(true);*/
-  congrats.setLabel("Congrats " + name);
+  congratslabel.setLabel("Congrats " + name);
   winnerwindow.setVisible(true);
 }
 void rescreen(){
