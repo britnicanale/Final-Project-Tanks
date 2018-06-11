@@ -24,6 +24,7 @@ void setup(){
    explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
    tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
    heart =  loadImage("heart.png"); //For lives
+   
    p = new Projectile(-10,-10, 0, 0); //initializes projectile off screen
   paused = false;
   

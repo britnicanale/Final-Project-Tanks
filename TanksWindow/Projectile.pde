@@ -31,28 +31,28 @@ class Projectile{
         return walls[i];
       }
     }
-      if( xcoor >= myTank.xcoor && ycoor >= myTank.ycoor && xcoor < myTank.xcoor + 60){
-        if(turn){
-          wind = random(-.1, .1);
-          xacc = wind;
-          xvel = initXvel;
-        }
-         return myTank;
+    if( xcoor >= myTank.xcoor && ycoor >= myTank.ycoor && xcoor < myTank.xcoor + 60){
+      if(turn){
+         wind = random(-.1, .1);
+         xacc = wind;
+         xvel = initXvel;
       }
-      if( xcoor >= yourTank.xcoor && ycoor >= yourTank.ycoor && xcoor < yourTank.xcoor + 60){
-        if(turn){
-          wind = random(-.1, .1);
-          xacc = wind;
-          xvel = initXvel;
+      return myTank;
+    }
+    if( xcoor >= yourTank.xcoor && ycoor >= yourTank.ycoor && xcoor < yourTank.xcoor + 60){
+      if(turn){
+        wind = random(-.1, .1);
+        xacc = wind;
+        xvel = initXvel;
       }
-        return yourTank;
-      }
-  
+      return yourTank;
+    }
     return null;
   }
+  
   void move(){
     xacc = wind;
-     yvel += yacc;
+    yvel += yacc;
     xvel += xacc;
     xcoor += xvel;
     ycoor += yvel;
@@ -66,7 +66,7 @@ class Projectile{
       explodeX = xcoor;
       explodeY = ycoor;
       exploding = true;
-    } 
+    }
     if(obj instanceof Tank){
       Tank t = (Tank) obj;
       tankExplosion.play();
@@ -74,14 +74,14 @@ class Projectile{
       t.explodeFrame = frameCount;
     }
     if((xcoor > width - 200 || xcoor < 0) || ycoor > height){
-        explosion.play();
+      explosion.play();
       exists = false;
       rescreen();
       if(turn){
         wind = random(-.1, .1);
         xacc = wind;
         xvel = initXvel;
-    }
+      }
     }
   }
   
@@ -89,16 +89,13 @@ class Projectile{
 
   
   void explode(){
-  //insert explode animation
-  rescreen();
-  image(explode, explodeX - (frameCount - explodeframe)*8, explodeY - (frameCount - explodeframe)*8, (frameCount - explodeframe)*16, (frameCount - explodeframe)*16);
-  exploding = frameCount < explodeframe + 12;
-  if(frameCount > explodeframe + 12){
-  }
-  if(!exploding){
-    rescreen();  
-    exists = false;
-  }
-  }
-  
+    //insert explode animation
+    rescreen();
+    image(explode, explodeX - (frameCount - explodeframe)*8, explodeY - (frameCount - explodeframe)*8, (frameCount - explodeframe)*16, (frameCount - explodeframe)*16);
+    exploding = frameCount < explodeframe + 12;
+    if(!exploding){
+      rescreen();  
+      exists = false;
+    }
+  }  
 }
