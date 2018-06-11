@@ -15,7 +15,7 @@ PImage heart; // For lives
 float wind; //X accelleration representing wind
 boolean paused; //determines if functionality is paused after a button press (to avoid bad actions)
 int pauseframe;//determines when first paused
-String pausebefore;
+String pausebefore; //to identify action taken after pause
    
 void setup(){
    size(800, 400);
