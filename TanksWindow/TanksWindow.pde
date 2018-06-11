@@ -3,12 +3,12 @@ import controlP5.*;
 
 
 ControlP5 startwindow, tankswindow, howtoplaywindow, htptankswindow, winnerwindow; //Different windows with different buttons, labels, and textareas
-Tank myTank, yourTank;
+Tank myTank, yourTank; 
 Wall[] walls;
 Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn; // Determines which tank's turn it is; true is left, false is right
-Button start, howtoplay, htpstart, restart, htptanks, resume, playagain, exit;
+Button start, howtoplay, htpstart, restart, htptanks, resume, playagain, exit; 
 Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel, menulabel, twhowtoplaylabel;
 Textarea instructions, twinstructions;
 PImage heart; // For lives
@@ -222,6 +222,8 @@ void setupWinnerWindow(String name){
   congratslabel.setText("Congrats " + name);
   winnerwindow.setVisible(true);
 }
+
+//redraws tankswindow so the projectile appears to be moving
 void rescreen(){
    background(135,206,250);
    for(int i = 0; i < walls.length;i++){
@@ -232,12 +234,16 @@ void rescreen(){
    rect(600,0,200,400);
    myTank.redraw();
    yourTank.redraw();
+   
+   //Draws lives
    for(int i = 0; i < 5-myTank.numHits; i++){
     image(heart, myTank.xcoor + i*20, 75, 15, 15);
   }
   for(int i = 0; i < 5-yourTank.numHits; i++){
     image(heart, yourTank.xcoor + i*20, 75, 15, 15);
   }
+  
+  //Represents wind
   stroke(256,256, 256);
   fill(256,256, 256);
   line(300, 25, 300+ 200* wind, 25);
@@ -249,6 +255,7 @@ void rescreen(){
 }
    
 void draw(){
+  //Tried to "pause" the sketch to stop any actions from accidentally being triggered after I pressed a certain button
   if(paused){
     if(pauseframe + 10 >= frameCount){
       paused = false;
@@ -256,7 +263,6 @@ void draw(){
       return;
     }
   }
-  
   if(tankswindow.isVisible()){
     if(myTank.numHits >= 5 && !myTank.exploding){
       setupWinnerWindow(myTank.name);
@@ -349,6 +355,7 @@ void draw(){
   }
 }
 
+//Creates arrow representing initial velocity and angle
 float startX, startY, endX, endY;
 void mousePressed(){
   if(!paused && tankswindow.isVisible() && mouseX < 600 && !p.exists){
@@ -375,6 +382,7 @@ void mouseDragged(){
   }
 }
 
+//Shoots the projectile
 void mouseReleased(){
   if(!paused && tankswindow.isVisible() && mouseX < 600 && !p.exists){
   if(turn){
