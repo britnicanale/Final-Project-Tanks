@@ -15,6 +15,7 @@ PImage heart; // For lives
 float wind; //X accelleration representing wind
 boolean paused; //determines if functionality is paused after a button press (to avoid bad actions)
 int pauseframe;//determines when first paused
+String pausebefore;
    
 void setup(){
    size(800, 400);
@@ -255,7 +256,22 @@ void draw(){
       return;
     }
   }
+  
   if(tankswindow.isVisible()){
+    if(myTank.numHits >= 5 && !myTank.exploding){
+      setupWinnerWindow(myTank.name);
+      tankswindow.setVisible(false);
+      paused = true;
+      pauseframe = frameCount;
+      return;
+  }
+  if(yourTank.numHits >= 5 && !yourTank.exploding){
+      setupWinnerWindow(yourTank.name);
+      tankswindow.setVisible(false);
+      paused = true;
+      pauseframe = frameCount;
+      return;
+  }
     if(p!= null && p.exists){
       rescreen();
       p.move();
@@ -273,12 +289,14 @@ void draw(){
       setupStartWindow();
       paused = true;
       pauseframe = frameCount;
+      return;
     }
     if(htptanks.isPressed()){
       tankswindow.setVisible(false);
       setupHTPTanks(); 
       paused = true;
       pauseframe = frameCount;
+      return;
     }
   }
   if(htptankswindow.isVisible()){
@@ -288,6 +306,7 @@ void draw(){
       tankswindow.setVisible(true);
        paused = true;
       pauseframe = frameCount;
+      return;
     }
   }
   if(startwindow.isVisible()){
@@ -296,12 +315,14 @@ void draw(){
        setupTanksWindow();
         paused = true;
       pauseframe = frameCount;
+      return;
     }
     if(howtoplay.isPressed()){
        startwindow.setVisible(false);
       setupHowToPlayWindow();
        paused = true;
       pauseframe = frameCount;
+      return;
     }
   }
   if(howtoplaywindow.isVisible()){
@@ -310,6 +331,7 @@ void draw(){
       setupTanksWindow();
        paused = true;
       pauseframe = frameCount;
+      return;
     }
   }
   if(winnerwindow.isVisible()){
@@ -318,6 +340,8 @@ void draw(){
       setupStartWindow();
        paused = true;
       pauseframe = frameCount;
+      return;
+      //pausebefore = "SW";
     }
     if(exit.isPressed()){
       exit();

@@ -31,7 +31,6 @@ class Tank{
   }
   
   Projectile shoot(float velocity, float angle){
-    print(p.xacc);
     shoot.play();
     if(direction){
     return new Projectile(xcoor+33, ycoor + 7, velocity, angle);
@@ -68,11 +67,13 @@ class Tank{
       htptanks.remove();
       restart.setVisible(false);
       restart.remove();
-      tanks.remove();*/
-      tankswindow.setVisible(false);
+      tanks.remove();
       setupWinnerWindow(name);
+      tankswindow.setVisible(false);
+      paused = true;
+      pauseframe = frameCount;*/
     }else{
-    rescreen();
+      rescreen();
     }
     
   }
