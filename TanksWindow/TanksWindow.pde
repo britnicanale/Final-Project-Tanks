@@ -1,23 +1,20 @@
 import processing.sound.*;
 import controlP5.*;
 
-/*
-tanks.setPosition(25, 25);
-      tanks.setFont(createFont("armalite.ttf",25)); ADD
-      */ 
 
-ControlP5 startwindow, tankswindow, howtoplaywindow, htptankswindow, winnerwindow;
+ControlP5 startwindow, tankswindow, howtoplaywindow, htptankswindow, winnerwindow; //Different windows with different buttons, labels, and textareas
 Tank myTank, yourTank;
 Wall[] walls;
 Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn; // Determines which tank's turn it is; true is left, false is right
-//boolean tankwindow, startwindow, howtoplaywindow, htptankswindow; //determine actions taken for certain buttons depending on window 
 Button start, howtoplay, htpstart, restart, htptanks, resume, playagain, exit;
-Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel;
+Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel, menulabel, twhowtoplaylabel;
 Textarea instructions, twinstructions;
 PImage heart; // For lives
 float wind; //X accelleration representing wind
+boolean paused; //determines if functionality is paused after a button press (to avoid bad actions)
+int pauseframe;//determines when first paused
    
 void setup(){
    size(800, 400);
@@ -26,10 +23,10 @@ void setup(){
    explosion = new SoundFile(this, "explodesound.mp3"); // played when projectile explodes
    tankExplosion = new SoundFile(this, "tankexplodesound.mp3"); //Plays when tank explodes
    heart =  loadImage("heart.png"); //For lives
-   p  = new Projectile(-10,-10,0,0);//Initializes a projectile off screen
+   p = new Projectile(-10,-10, 0, 0); //initializes projectile off screen
+  paused = false;
   
-  
-  createWindows();
+  createWindows(); // creates each window and makes them invisible to start
   setupStartWindow();
 }
 
@@ -62,19 +59,26 @@ void createWindows(){
    .setPosition(25,25)
    .setSize(175,50)
    .setFont(createFont("armalite.ttf",25))
-   .setColor(0);
+   .setColor(255);
    ;
- htptanks = tankswindow.addButton("How to Play")
+   menulabel = tankswindow.addTextlabel("MenuLabel")
+   .setText("MENU")
+   .setPosition(650,50)
+   .setSize(100,50)
+   .setFont(createFont("armalite.ttf",35))
+   .setColor(255);
+   ;
+ htptanks = tankswindow.addButton("How to Play TANKS")
   .setLabel("How To Play")
   .setSize(100,50)
-  .setPosition(650, 50)
+  .setPosition(650, 125)
   .setColor(new CColor(0, 0, 0, 0xff999999, 0));
   ;
   restart = tankswindow.addButton("Restart")
    .setLabel("Restart")
    .setSize(100,50)
    .setColor(new CColor(0, 0, 0, 0xff999999, 0))
-   .setPosition(650, 125);
+   .setPosition(650, 200);
   ;
   tankswindow.setVisible(false);
   
@@ -113,10 +117,17 @@ void createWindows(){
   twinstructions = htptankswindow.addTextarea("twinstructions")
   .setPosition(125, 150)
   .setSize(350, 150)
-  .setColor(99)
+  .setColor(255)
   .setFont(createFont("arial",18))
   .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
   ;
+  twhowtoplaylabel = htptankswindow.addTextlabel("twhowtoplaylabel")
+ .setText("How to Play")
+ .setPosition(200, 100)
+ .setSize(177,50)
+ .setFont(createFont("armalite.ttf",25))
+ .setColor(255);
+ ;
   resume = htptankswindow.addButton("Resume")
   .setLabel("Resume")
   .setSize(100,50)
@@ -131,7 +142,7 @@ void createWindows(){
  .setPosition(625,50)
  .setSize(175,50)
  .setFont(createFont("armalite.ttf",15))
- .setColor(0);
+ .setColor(255);
  ;
   
   playagain = winnerwindow.addButton("Play Again")
@@ -150,33 +161,11 @@ void createWindows(){
 }
 void setupStartWindow(){
   background(135,206,250);//Sky Blue
-  /*tanks = cp5.addTextlabel("TANKS")
-   .setText("TANKS")
-   .setPosition(width/2 - 87.5, 50)
-   .setSize(175,50)
-   .setFont(createFont("armalite.ttf",50))
-   .setColor(0)
-   ;
-  start = cp5.addButton("Start")
-  .setLabel("Start")  
-  .setSize(100,50)
-  .setPosition(width/2 - 50, 150)
-  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
-  ;
-  howtoplay = cp5.addButton("How To Play")
-  .setLabel("How To Play")
-  .setSize(100,50)
-  .setPosition(width/2 - 50, 225)
-  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
-  ;
-  tanks.setVisible(true);
-  start.setVisible(true);
-  howtoplay.setVisible(true);*/
   startwindow.setVisible(true);
 }
 
 void setupTanksWindow(){
-  background(135,206,250);
+  background(135,206,250); //Sky Blue
   //Randomizes height & width of walls & location of tanks each time a new game is created
   walls = new Wall[3];
   walls[0] = new Wall(random(225,275), random(50,150), random(325, 375) );
@@ -191,31 +180,7 @@ void setupTanksWindow(){
   rect(600,0,200,400);
   
   
-  turn = true;
-  /*
- twtanks = cp5.addTextlabel("twTANKS")
- .setLabel("TANKS")
- .setPosition(25,25)
- .setSize(175,50)
- .setFont(createFont("armalite.ttf",25))
- .setColor(0)
- ;
- htptanks = cp5.addButton("How to Play")
- .setLabel("How To Play")
-  .setSize(100,50)
-  .setPosition(650, 50)
-  .setColor(new CColor(0, 0, 0, 0xff999999, 0));
-  ;
-  restart = cp5.addButton("Restart")
-   .setLabel("Restart")
-   .setSize(100,50)
-   .setColor(new CColor(0, 0, 0, 0xff999999, 0))
-   .setPosition(650, 125);
-  ;
-  restart.setVisible(true);
-  htptanks.setVisible(true);
-  TWtanks.setVisible(true);
-  */
+  turn = true;//Starts as player 1s turn
   tankswindow.setVisible(true);
   
   //Adds lives to screen
@@ -235,68 +200,17 @@ void setupTanksWindow(){
   }else{
     triangle(300+ 200* wind, 25, 300+ 200* wind + 7, 20, 300+ 200* wind + 7, 30);
   }
-  //tankwindow = true;
-  p.exists = false;
+
 }
 
 void setupHowToPlayWindow(){
   background(135,206,250);
-  /*
-  instructions = cp5.addTextarea("instructions")
-  .setPosition(width/2 - 125, 125)
-  .setSize(300, height - 150)
-  .setColor(0)
-  .setFont(createFont("arial",18))
-  .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
-  ;
-  htptankslabel = cp5.addTextlabel("htpTANKSlabel")
- .setText("TANKS")
- .setPosition(25,25)
- .setSize(175,50)
- .setFont(createFont("armalite.ttf",25))
- .setColor(0)
- ;
-  howtoplaylabel = cp5.addLabel("howtoplay")
-  .setPosition(width/2 - 112, 75)
-  .setSize(225,50)
-  .setColor(0)
-  .setText("How To Play")
-  .setFont(createFont("armalite.ttf",35));
-  ;
-  htpstart = cp5.addButton("HTPStart")
-  .setLabel("Start")
-  .setSize(100,50)
-  .setPosition(width/2 - 50, height - 62.5)
-  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
-  ;
-  
-  instructions.setVisible(true);
-  htptankslabel.setVisible(true);
-  howtoplaylabel.setVisible(true);
-  htpstart.setVisible(true);
-  */
   howtoplaywindow.setVisible(true);
 }
 void setupHTPTanks(){
   fill(0);
   stroke(0);
   rect(100,75,400, 300);
-  /*
-  instructions = cp5.addTextarea("instructions")
-  .setPosition(125, 150)
-  .setSize(350, 150)
-  .setColor(99)
-  .setFont(createFont("arial",18))
-  .setText("The aim of Tanks is to destroy your enemy tank before they destroy you. To destroy your enemy tank, you must hit them 5 times with a projectile. To shoot, use your mouse to click on the screen. Holding the mouse will show an arrow, which represents the initial speed and angle of the projectile. Releasing the mouse shoots the projectile based on the arrow.");
-  ;
-  resume = cp5.addButton("Resume")
-  .setLabel("Resume")
-  .setSize(100,50)
-  .setPosition(width/2 - 50, 325)
-  .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
-  ;
-  twinstructions.setVisible(true);
-  resume.setVisible(true);*/
   htptankswindow.setVisible(true);
 }
 
@@ -304,10 +218,6 @@ void setupWinnerWindow(String name){
   fill(0,100,0);
    stroke(0,100,0);
    rect(600,0,200,400);
- /*textFont(createFont("armalite.ttf", 35.0));
- stroke(0,0,0);
-  text("Congrats " + name, 625, 50);
-  congrats.setVisible(true);*/
   congratslabel.setText("Congrats " + name);
   winnerwindow.setVisible(true);
 }
@@ -338,11 +248,18 @@ void rescreen(){
 }
    
 void draw(){
+  if(paused){
+    if(pauseframe + 10 >= frameCount){
+      paused = false;
+    }else{
+      return;
+    }
+  }
   if(tankswindow.isVisible()){
     if(p!= null && p.exists){
       rescreen();
       p.move();
-      }else if(p != null && !p.exists && p.exploding){
+    }else if(p != null && !p.exists && p.exploding){
         p.explode();
     }
     if(myTank.exploding){
@@ -352,65 +269,55 @@ void draw(){
       yourTank.explode();
     }
     if(restart.isPressed()){
-      /*restart.setVisible(false);
-      htptanks.setVisible(false);
-      TWtanks.setVisible(false);*/
       tankswindow.setVisible(false);
       setupStartWindow();
+      paused = true;
+      pauseframe = frameCount;
     }
     if(htptanks.isPressed()){
       tankswindow.setVisible(false);
-      setupHTPTanks();
-      /*htptanks.setVisible(false);
-      restart.setVisible(false);
-      TWtanks.setVisible(false);
-      */
+      setupHTPTanks(); 
+      paused = true;
+      pauseframe = frameCount;
     }
   }
   if(htptankswindow.isVisible()){
     if(resume.isPressed()){
       rescreen();
-      /*instructions.setVisible(false);
-      resume.setVisible(false);*/
       htptankswindow.setVisible(false);
-      /*htptanks.setVisible(true);
-      restart.setVisible(true);*/
-      //p  = new Projectile(-10,-10,0,0);//Initializes a projectile off screen
       tankswindow.setVisible(true);
+       paused = true;
+      pauseframe = frameCount;
     }
   }
   if(startwindow.isVisible()){
     if (start.isPressed()){
-      //p.exists = true;
       startwindow.setVisible(false);
-      /*start.setVisible(false);
-      howtoplay.setVisible(false);
-      tanks.setVisible(false);*/
        setupTanksWindow();
+        paused = true;
+      pauseframe = frameCount;
     }
     if(howtoplay.isPressed()){
        startwindow.setVisible(false);
-      /*howtoplay.setVisible(false);
-      start.setVisible(false);
-      tanks.setVisible(false);*/
       setupHowToPlayWindow();
+       paused = true;
+      pauseframe = frameCount;
     }
   }
   if(howtoplaywindow.isVisible()){
     if(htpstart.isPressed()){
-      //p.exists = true;
       howtoplaywindow.setVisible(false);
-      /*htpstart.setVisible(false);
-      howtoplaylabel.setVisible(false);
-      instructions.setVisible(false);
-      tanks.setVisible(false);*/
       setupTanksWindow();
+       paused = true;
+      pauseframe = frameCount;
     }
   }
   if(winnerwindow.isVisible()){
     if(playagain.isPressed()){
       winnerwindow.setVisible(false);
       setupStartWindow();
+       paused = true;
+      pauseframe = frameCount;
     }
     if(exit.isPressed()){
       exit();
@@ -420,7 +327,7 @@ void draw(){
 
 float startX, startY, endX, endY;
 void mousePressed(){
-  if(tankswindow.isVisible() && mouseX < 600 && !p.exists){
+  if(!paused && tankswindow.isVisible() && mouseX < 600 && !p.exists){
   endX = mouseX;
   endY = mouseY;
   if(turn){
@@ -436,7 +343,7 @@ void mousePressed(){
 
 
 void mouseDragged(){
-  if(tankswindow.isVisible() && mouseX < 600 && !p.exists){
+  if(!paused && tankswindow.isVisible() && mouseX < 600 && !p.exists){
  endX = mouseX;
  endY = mouseY;
  rescreen();
@@ -445,7 +352,7 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  if(tankswindow.isVisible() && mouseX < 600 && !p.exists){
+  if(!paused && tankswindow.isVisible() && mouseX < 600 && !p.exists){
   if(turn){
     p = myTank.shoot(dist(startX, startY, endX, endY)/ 10, atan2(endY-startY, endX-startX));
   }else{
@@ -457,7 +364,7 @@ void mouseReleased(){
 
 //creates line to represent initial velocity & angle
 void makeline(){ 
-  if(tankswindow.isVisible()){
+  if(!paused && tankswindow.isVisible()){
     //Makes arrow representing initial velocity
     stroke(255,69,0);
     fill(255,69,0);
