@@ -186,13 +186,13 @@ void setupTanksWindow(){
   tankswindow.setVisible(true);
   
   //Adds lives to screen
-  for(int i = 0; i < 5-myTank.numHits; i++){
-    image(heart, myTank.xcoor + i*20, 75, 15, 15);
-  }
-  for(int i = 0; i < 5-yourTank.numHits; i++){
-    image(heart, yourTank.xcoor + i*20, 75, 15, 15);
-  }
-  
+
+  fill(256, 0, 0);
+   stroke(256, 0, 0);
+     image(heart, myTank.xcoor, 75, 15, 15);
+rect(myTank.xcoor + 7, 77,60 -12*myTank.numHits, 10);
+  image(heart, yourTank.xcoor, 75, 15, 15);
+  rect(yourTank.xcoor + 7, 77, 60 - 12*yourTank.numHits, 10);
   //Arrow representing the amount of wind
   stroke(256,256, 256);
   fill(256,256, 256);
@@ -237,12 +237,12 @@ void rescreen(){
    yourTank.redraw();
    
    //Draws lives
-   for(int i = 0; i < 5-myTank.numHits; i++){
-    image(heart, myTank.xcoor + i*20, 75, 15, 15);
-  }
-  for(int i = 0; i < 5-yourTank.numHits; i++){
-    image(heart, yourTank.xcoor + i*20, 75, 15, 15);
-  }
+   fill(256, 0, 0);
+   stroke(256, 0, 0);
+     image(heart, myTank.xcoor, 75, 15, 15);
+rect(myTank.xcoor + 7, 77,60 -12*myTank.numHits, 10);
+  image(heart, yourTank.xcoor, 75, 15, 15);
+  rect(yourTank.xcoor + 7, 77, 60 - 12*yourTank.numHits, 10);
   
   //Represents wind
   stroke(256,256, 256);

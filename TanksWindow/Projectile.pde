@@ -59,7 +59,23 @@ class Projectile{
     fill(255,69,0);
     ellipse(xcoor, ycoor, 15, 15);
     Object obj = collide();
-    if(obj != null){
+    if(obj instanceof Wall){
+      println(abs(xcoor - yourTank.xcoor) + ", " + abs(xcoor - (yourTank.xcoor + 60)));
+      if(abs(xcoor - yourTank.xcoor) <20 || abs(xcoor - (yourTank.xcoor + 60)) < 20){
+        if(abs(xcoor - yourTank.xcoor) < abs(xcoor - (yourTank.xcoor + 60))){
+          yourTank.numHits-= (1 - abs(xcoor - yourTank.xcoor)*.05);
+        }else{
+          yourTank.numHits-= (1 -  abs(xcoor - (yourTank.xcoor + 60)*.05));
+        }
+      }
+       println(abs(xcoor - myTank.xcoor) + ", " + abs(xcoor - (myTank.xcoor + 60)));
+      if(abs(xcoor - myTank.xcoor) <20 || abs(xcoor - (myTank.xcoor + 60)) < 20){
+        if(abs(xcoor - myTank.xcoor) < abs(xcoor - (myTank.xcoor + 60))){
+          myTank.numHits-= (1 - abs(xcoor - myTank.xcoor)*.05);
+        }else{
+          myTank.numHits-= (1 -  abs(xcoor - (myTank.xcoor + 60)*.05));
+        }
+      }
       explosion.play();
       exists = false;
       explodeframe = frameCount;
@@ -67,12 +83,27 @@ class Projectile{
       explodeY = ycoor;
       exploding = true;
     }
+    /*if(obj != null){
+      explosion.play();
+      exists = false;
+      explodeframe = frameCount;
+      explodeX = xcoor;
+      explodeY = ycoor;
+      exploding = true;
+    }*/
     if(obj instanceof Tank){
       Tank t = (Tank) obj;
       tankExplosion.play();
       t.setExploding(true);
       t.explodeFrame = frameCount;
+      explosion.play();
+      exists = false;
+      explodeframe = frameCount;
+      explodeX = xcoor;
+      explodeY = ycoor;
+      exploding = true;
     }
+    
     if((xcoor > width - 200 || xcoor < 0) || ycoor > height){
       explosion.play();
       exists = false;
