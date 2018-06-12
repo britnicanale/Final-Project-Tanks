@@ -63,19 +63,23 @@ class Projectile{
       println(abs(xcoor - yourTank.xcoor) + ", " + abs(xcoor - (yourTank.xcoor + 60)));
       if(abs(xcoor - yourTank.xcoor) <20 || abs(xcoor - (yourTank.xcoor + 60)) < 20){
         if(abs(xcoor - yourTank.xcoor) < abs(xcoor - (yourTank.xcoor + 60))){
-          yourTank.numHits-= (1 - abs(xcoor - yourTank.xcoor)*.05);
+          yourTank.numHits+= (20 - abs(xcoor - yourTank.xcoor))*.05;
         }else{
-          yourTank.numHits-= (1 -  abs(xcoor - (yourTank.xcoor + 60)*.05));
+          yourTank.numHits+= (20 -  abs(xcoor - (yourTank.xcoor + 60)))*.05;
         }
+       
       }
+       println(yourTank.numHits);
        println(abs(xcoor - myTank.xcoor) + ", " + abs(xcoor - (myTank.xcoor + 60)));
       if(abs(xcoor - myTank.xcoor) <20 || abs(xcoor - (myTank.xcoor + 60)) < 20){
         if(abs(xcoor - myTank.xcoor) < abs(xcoor - (myTank.xcoor + 60))){
-          myTank.numHits-= (1 - abs(xcoor - myTank.xcoor)*.05);
+          myTank.numHits+= (20 - abs(xcoor - myTank.xcoor))*.05;
         }else{
-          myTank.numHits-= (1 -  abs(xcoor - (myTank.xcoor + 60)*.05));
+          myTank.numHits+= (20 -  abs(xcoor - (myTank.xcoor + 60)))*.05;
         }
+        
       }
+      println(myTank.numHits);
       explosion.play();
       exists = false;
       explodeframe = frameCount;
