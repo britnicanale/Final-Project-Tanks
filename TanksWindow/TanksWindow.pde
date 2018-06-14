@@ -196,8 +196,8 @@ void setupTanksWindow(){
   walls[0] = new Wall(random(225,275), random(50,150), random(325, 375) );
   walls[1] = new Wall(0, random(200,350), walls[0].leftX);
   walls[2] = new Wall(walls[0].rightX, random(200,350), width-200);
-  yourTank = new Tank( walls[0].rightX + random(50,150), walls[2].leftY - 30, false, "Player 2");
-  myTank = new Tank(walls[0].leftX - random(100,200), walls[1].leftY - 30, true, "Player 1");
+  yourTank = new Tank( walls[0].rightX + random(50,150), walls[2].leftY - 30, false, playertwoinput.getText());
+  myTank = new Tank(walls[0].leftX - random(100,200), walls[1].leftY - 30, true, playeroneinput.getText());
   
   //Menu bar
   fill(0,100,0);
@@ -343,35 +343,32 @@ void draw(){
   if(startwindow.isVisible()){
     if (pressed(start)){
       startwindow.setVisible(false);
-       setupTanksWindow();
-        paused = true;
+      setupTanksWindow();
+      paused = true;
       pauseframe = frameCount;
-      if(playeroneinput.getText() == null){
-      myTank.name = "Player One";
-    }else{
-      myTank.name = playeroneinput.getText();
-    }if(playertwoinput.getText() == null){
-      yourTank.name = "Player Two";
-    }else{
-      yourTank.name = playertwoinput.getText();
-    }
+
+      if(myTank.name == ""){
+        myTank.name = "Player 1";
+      }
+      print(myTank.name == "");
+      if(yourTank.name == ""){
+        yourTank.name = "Player 2";
+      }
       return;
     }
     if(pressed(howtoplay)){
        startwindow.setVisible(false);
-      setupHowToPlayWindow();
+       setupHowToPlayWindow();
        paused = true;
-      pauseframe = frameCount;
-      if(playeroneinput.getText() == null){
-      myTank.name = "Player One";
-    }else{
-      myTank.name = playeroneinput.getText();
-    }if(playertwoinput.getText() == null){
-      yourTank.name = "Player Two";
-    }else{
-      yourTank.name = playertwoinput.getText();
-    }
-      return;
+       pauseframe = frameCount;
+       if(myTank.name == ""){
+         myTank.name = "Player 1";
+       }
+       
+       if(yourTank.name == ""){
+         yourTank.name = "Player 2";
+       }
+       return;
     }
   }
   if(howtoplaywindow.isVisible()){
