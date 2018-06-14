@@ -266,14 +266,14 @@ void draw(){
   }
   if(tankswindow.isVisible()){
     if(myTank.numHits >= 5 && !myTank.exploding){
-      setupWinnerWindow(myTank.name);
+      setupWinnerWindow(yourTank.name);
       tankswindow.setVisible(false);
       paused = true;
       pauseframe = frameCount;
       return;
   }
   if(yourTank.numHits >= 5 && !yourTank.exploding){
-      setupWinnerWindow(yourTank.name);
+      setupWinnerWindow(myTank.name);
       tankswindow.setVisible(false);
       paused = true;
       pauseframe = frameCount;
@@ -291,14 +291,14 @@ void draw(){
       if(yourTank.exploding){
       yourTank.explode();
     }
-    if(restart.isPressed()){
+    if(pressed(restart)){
       tankswindow.setVisible(false);
       setupStartWindow();
       paused = true;
       pauseframe = frameCount;
       return;
     }
-    if(htptanks.isPressed()){
+    if(pressed(htptanks)){
       tankswindow.setVisible(false);
       setupHTPTanks(); 
       paused = true;
@@ -307,7 +307,7 @@ void draw(){
     }
   }
   if(htptankswindow.isVisible()){
-    if(resume.isPressed()){
+    if(pressed(resume)){
       rescreen();
       htptankswindow.setVisible(false);
       tankswindow.setVisible(true);
@@ -317,14 +317,14 @@ void draw(){
     }
   }
   if(startwindow.isVisible()){
-    if (start.isPressed()){
+    if (pressed(start)){
       startwindow.setVisible(false);
        setupTanksWindow();
         paused = true;
       pauseframe = frameCount;
       return;
     }
-    if(howtoplay.isPressed()){
+    if(pressed(howtoplay)){
        startwindow.setVisible(false);
       setupHowToPlayWindow();
        paused = true;
@@ -333,7 +333,7 @@ void draw(){
     }
   }
   if(howtoplaywindow.isVisible()){
-    if(htpstart.isPressed()){
+    if(pressed(htpstart)){
       howtoplaywindow.setVisible(false);
       setupTanksWindow();
        paused = true;
@@ -342,7 +342,7 @@ void draw(){
     }
   }
   if(winnerwindow.isVisible()){
-    if(playagain.isPressed()){
+    if(pressed(playagain)){
       winnerwindow.setVisible(false);
       setupStartWindow();
        paused = true;
@@ -350,7 +350,7 @@ void draw(){
       return;
       //pausebefore = "SW";
     }
-    if(exit.isPressed()){
+    if(pressed(exit)){
       exit();
     }
   }
@@ -419,4 +419,9 @@ void makeline(){
     rect(0,0, 30, 7);
     popMatrix();
   }
+}
+
+boolean pressed(Button b){
+  float[] pos = b.getPosition();
+  return mousePressed && mouseX > pos[0] && mouseY > pos[1] && mouseX < (pos[0] + b.getWidth()) && mouseY < (pos[1] + b.getHeight());
 }
