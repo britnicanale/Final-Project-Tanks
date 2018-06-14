@@ -9,7 +9,8 @@ Projectile p;
 SoundFile shoot, explosion, tankExplosion;
 boolean turn; // Determines which tank's turn it is; true is left, false is right
 Button start, howtoplay, htpstart, restart, htptanks, resume, playagain, exit; 
-Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel, menulabel, twhowtoplaylabel;
+Textlabel tankslabel, TWtankslabel, howtoplaylabel, congratslabel, htptankslabel, menulabel, twhowtoplaylabel, playerone, playertwo;
+Textfield playeroneinput, playertwoinput;
 Textarea instructions, twinstructions;
 PImage heart; // For lives
 float wind; //X accelleration representing wind
@@ -41,16 +42,38 @@ void createWindows(){
    .setFont(createFont("armalite.ttf",50))
    .setColor(0);
    ;
+  playerone = startwindow.addTextlabel("Player One")
+  .setText("Player One:")
+  .setPosition(width/2 - 125, 125)
+  .setFont(createFont("armalite.ttf",15))
+  .setColor(0);
+  ;
+  playeroneinput = startwindow.addTextfield("Player One Input")
+  .setWidth(100)
+  .setColor(new CColor(0, color(256,256,256), 0, color(135,206,250), 0))
+  .setPosition(width/2 - 125, 150);
+  ;
+  playertwo = startwindow.addTextlabel("Player Two")
+  .setText("Player Two:")
+  .setPosition(width/2 + 25, 125)
+  .setFont(createFont("armalite.ttf",15))
+  .setColor(0);
+  ;
+   playertwoinput = startwindow.addTextfield("Player Two Input")
+  .setWidth(100)
+  .setColor(new CColor(0, color(256,256,256), 0, color(135,206,250), 0))
+  .setPosition(width/2 + 25, 150);
+  ;
   start = startwindow.addButton("Start")
   .setLabel("Start")  
   .setSize(100,50)
-  .setPosition(width/2 - 50, 150)
+  .setPosition(width/2 - 50, 200)
   .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
    ;
   howtoplay = startwindow.addButton("How To Play")
   .setLabel("How To Play")
   .setSize(100,50)
-  .setPosition(width/2 - 50, 225)
+  .setPosition(width/2 - 50, 275)
   .setColor(new CColor(0, 0xff005000, 0, 0xff999999, 0));
   ;
   startwindow.setVisible(false);
@@ -236,6 +259,7 @@ void rescreen(){
    myTank.redraw();
    yourTank.redraw();
    
+   
    //Draws lives
    fill(256, 0, 0);
    stroke(256, 0, 0);
@@ -322,6 +346,15 @@ void draw(){
        setupTanksWindow();
         paused = true;
       pauseframe = frameCount;
+      if(playeroneinput.getText() == null){
+      myTank.name = "Player One";
+    }else{
+      myTank.name = playeroneinput.getText();
+    }if(playertwoinput.getText() == null){
+      yourTank.name = "Player Two";
+    }else{
+      yourTank.name = playertwoinput.getText();
+    }
       return;
     }
     if(pressed(howtoplay)){
@@ -329,6 +362,15 @@ void draw(){
       setupHowToPlayWindow();
        paused = true;
       pauseframe = frameCount;
+      if(playeroneinput.getText() == null){
+      myTank.name = "Player One";
+    }else{
+      myTank.name = playeroneinput.getText();
+    }if(playertwoinput.getText() == null){
+      yourTank.name = "Player Two";
+    }else{
+      yourTank.name = playertwoinput.getText();
+    }
       return;
     }
   }

@@ -28,6 +28,7 @@ class Tank{
     }else{
       rect(xcoor+ 25, ycoor, -30, 7);
     }
+    drawname();
   }
   
   Projectile shoot(float velocity, float angle){
@@ -50,6 +51,12 @@ class Tank{
            rect(xcoor+ 25, ycoor, -30, 7);
         }
      }
+     drawname();
+  }
+  void drawname(){
+    textSize(14);
+    fill(0);
+text(name, xcoor, 70);
   }
   void setExploding(boolean exp){
     exploding = exp;
