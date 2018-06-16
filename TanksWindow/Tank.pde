@@ -69,17 +69,7 @@ text(name, xcoor, 70);
   image(explode, xcoor - (frameCount - explodeFrame)*8, ycoor - (frameCount - explodeFrame)*8, (frameCount - explodeFrame)*16, (frameCount - explodeFrame)*16);
   exploding = frameCount < explodeFrame + 48;
   if(!exploding){
-    if(numHits >= 5){
-      /*htptanks.setVisible(false);
-      htptanks.remove();
-      restart.setVisible(false);
-      restart.remove();
-      tanks.remove();
-      setupWinnerWindow(name);
-      tankswindow.setVisible(false);
-      paused = true;
-      pauseframe = frameCount;*/
-    }else{
+    if(numHits < 5){
       rescreen();
     }
     

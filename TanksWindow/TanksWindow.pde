@@ -349,7 +349,6 @@ void draw(){
       if(myTank.name == ""){
         myTank.name = "Player 1";
       }
-      print(myTank.name == "");
       if(yourTank.name == ""){
         yourTank.name = "Player 2";
       }
