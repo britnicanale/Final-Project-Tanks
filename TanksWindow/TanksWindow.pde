@@ -221,9 +221,9 @@ rect(myTank.xcoor + 7, 77,60 -12*myTank.numHits, 10);
   fill(256,256, 256);
   line(300, 25, 300+ 200* wind, 25);
   if(wind>0){
-      triangle(300+ 200* wind, 25, 300+ 200* wind - 7, 20, 300+ 200* wind - 7, 30);
+      triangle(300+ 200* wind + 7, 25, 300+ 200* wind, 20, 300+ 200* wind, 30);
   }else{
-    triangle(300+ 200* wind, 25, 300+ 200* wind + 7, 20, 300+ 200* wind + 7, 30);
+    triangle(300+ 200* wind - 7, 25, 300+ 200* wind, 20, 300+ 200* wind, 30);
   }
 
 }
@@ -273,16 +273,16 @@ rect(myTank.xcoor + 7, 77,60 -12*myTank.numHits, 10);
   fill(256,256, 256);
   line(300, 25, 300+ 200* wind, 25);
   if(wind>0){
-      triangle(300+ 200* wind, 25, 300+ 200* wind - 7, 20, 300+ 200* wind - 7, 30);
+      triangle(300+ 200* wind + 7, 25, 300+ 200* wind, 20, 300+ 200* wind, 30);
   }else{
-    triangle(300+ 200* wind, 25, 300+ 200* wind + 7, 20, 300+ 200* wind + 7, 30);
+    triangle(300+ 200* wind - 7, 25, 300+ 200* wind, 20, 300+ 200* wind, 30);
   }
 }
    
 void draw(){
   //Tried to "pause" the sketch to stop any actions from accidentally being triggered after I pressed a certain button
   if(paused){
-    if(pauseframe + 10 >= frameCount){
+    if(pauseframe + 10 == frameCount){
       paused = false;
     }else{
       return;
@@ -346,7 +346,6 @@ void draw(){
       setupTanksWindow();
       paused = true;
       pauseframe = frameCount;
-
       if(myTank.name == ""){
         myTank.name = "Player 1";
       }
@@ -361,13 +360,6 @@ void draw(){
        setupHowToPlayWindow();
        paused = true;
        pauseframe = frameCount;
-       if(myTank.name == ""){
-         myTank.name = "Player 1";
-       }
-       
-       if(yourTank.name == ""){
-         yourTank.name = "Player 2";
-       }
        return;
     }
   }
@@ -387,7 +379,6 @@ void draw(){
        paused = true;
       pauseframe = frameCount;
       return;
-      //pausebefore = "SW";
     }
     if(pressed(exit)){
       exit();
