@@ -1,6 +1,6 @@
 # Final-Project-Tanks
 <b>How to download and open Tanks</b><br>
-1. Clone the Final-Project-Tanks repository into a directory on your machine using https://.
+1. Clone the Final-Project-Tanks repository into a directory on your machine using HTTPS.
 2. Use command <kbd>cd</kbd> to change directories into the respository.
 3. If you do not have Processing downloaded already, download it <a href = "https://processing.org/download/">here</a>
 4. Open Processing on your computer. Choose File > Open. Select the folder TanksWindow from the repository Final-Project-Tanks.
